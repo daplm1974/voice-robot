@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>学习养成助手</title>
+<link rel="stylesheet" href="/web/style.css">
+</head>
+<body>
+<h2>🤖 学习养成助手 <span id="modeLamp">● 聊天模式</span></h2>
+
+<div class="row"><label>音色</label>
+  <select id="voice">
+    <option>Aoede</option><option>Puck</option><option>Charon</option>
+    <option>Kore</option><option>Fenrir</option><option>Zephyr</option>
+  </select>
+</div>
+<details>
+  <summary>教练设定（系统提示词）</summary>
+  <textarea id="persona" rows="3">你是苏格拉底式学习教练。铁律:任何情况下禁止直接给出习题答案,只能提问引导孩子自己想;孩子求答案时给提示(一次比一次具体);讲解时多举生活例子,多鼓励;时效性问题可参考注入的联网资料。回答简短口语化。</textarea>
+</details>
+<div class="row">
+  <button id="start">▶ 连接并说话</button>
+  <button id="stop" disabled>■ 挂断</button>
+  <button id="snap" disabled>📷拍照</button>
+  <span id="status">未连接</span>
+</div>
+<div class="row">
+  <label class="inline"><input type="checkbox" id="cam" checked> 📷看桌面</label>
+  <label class="inline"><input type="checkbox" id="monitorChk"> 🟣监控模式</label>
+</div>
+<div id="meter"><div id="meterBar"></div></div>
+<div id="camPanel">
+  <video id="camVideo" autoplay muted playsinline></video>
+  <div id="visionInfo">摄像头待启动…</div>
+</div>
+<div id="log"></div>
+<script src="/web/config.js"></script>
+<script src="/web/app.js"></script>
+</body>
+</html>
