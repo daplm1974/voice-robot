@@ -37,11 +37,14 @@ server/core/agent.ts = pi-sdk会话工厂(平台核心,他项目可复用)
 
 ## 环境变量
 
-`PORT`(8791) `LIVE_PROXY`(http://127.0.0.1:10808) `LIVE_MODEL`(gemini-3.8-live) `VISION_PROVIDER`(local|glm) `LOCAL_LLM`(http://192.168.5.101:28000/v1) `LOCAL_MODEL`(Qwen3.8-27B-NVFP4)
+`PORT`(8791) `LIVE_PROXY`(http://127.0.0.1:10808) `LIVE_MODEL`(gemini-3.8-live) `VISION_PROVIDER`(glm默认|local) `LOCAL_LLM`(http://192.168.5.101:28000/v1) `LOCAL_MODEL`(Qwen3.8-27B-NVFP4)
+
+API key 全部运行时从 `~/.pi/agent/auth.json` 读取(google/zai-coding-cn), 不写进代码和仓库。
 
 ## 关键实测结论
 
 - 本地Qwen3.8是思考型: 分类/视觉必须 `chat_template_kwargs:{enable_thinking:false}`,否则小预算下content为空(10.8s→0.9s的差距就在这)
+- GLM coding端点(api.z.ai/api/coding/paas/v4)可直接用 glm-4.6v/4.5v 视觉(data URL base64, 实测2~3s/张), 用 Coding Plan key 无额外费用; 坏图/裁剪过头会回1210图片解析错误
 - Gemini Live: 音频走client_content的inlineData(media_chunks被静默丢弃);说完必须发turn_complete;信令JSON可能以二进制帧到达
 - web_search工具(pi-web-access)在SDK会话中可用,单次搜索26~44s → 只适合异步路径
 - 浏览器采音: AEC开/NS关; 播报半双工+强插话检测在前端
@@ -55,7 +58,8 @@ tests/selftest.js  reference/  docs/
 
 ## 依赖服务
 
-- 192.168.5.101:28000 本地vLLM(Qwen3.8-27B-NVFP4, 视觉+分类+综合)
+- 192.168.5.101:28000 本地vLLM(Qwen3.8-27B-NVFP4, 分类+搜索综合)
+- GLM coding plan(z.ai, glm-4.6v 视觉默认)
 - Gemini API + 出网代理
 
 ## 当前状态与下一步
@@ -73,7 +77,7 @@ tests/selftest.js  reference/  docs/
 
 **⏭️ 下一步:**
 
-1. **视频帧通道**(已定, 下一阶段) — 监控视觉目前走本地 Qwen; 打通 Gemini Live 视频帧上行, 让云侧也能实时看画面
+1. **视频帧通道**(已定, 下一阶段) — 监控视觉已切 GLM 云侧(2026-09-29); 进一步打通 Gemini Live 视频帧上行, 让对话侧也能实时看画面
 2. 候选: 接入 :8101 CosyVoice2 TTS 替代 Gemini 语音(待其性能优化)
 3. 候选: 接入 :8103 唤醒词「文森特卡索」, 摆脱手动点击启动
 

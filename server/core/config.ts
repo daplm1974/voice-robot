@@ -15,7 +15,7 @@ export const config: Config = {
   port: Number(process.env.PORT || 8791),
   proxy: process.env.LIVE_PROXY || 'http://127.0.0.1:10808',
   geminiModel: process.env.LIVE_MODEL || 'gemini-3.8-live',
-  visionProvider: (process.env.VISION_PROVIDER as 'local' | 'glm') || 'local',
+  visionProvider: (process.env.VISION_PROVIDER as 'local' | 'glm') || 'glm',
   localLlm: process.env.LOCAL_LLM || 'http://192.168.5.101:28000/v1',
   localModel: process.env.LOCAL_MODEL || 'Qwen3.8-27B-NVFP4',
 };

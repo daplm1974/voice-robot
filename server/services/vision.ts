@@ -1,4 +1,4 @@
-/** vision.ts — 视觉服务(本地Qwen默认/GLM备选; state/read/monitor三模式) */
+/** vision.ts — 视觉服务(GLM默认/本地Qwen备选; state/read/monitor三模式) */
 import { config, readZaiKey } from '../core/config.ts';
 
 const VISION_PROMPT = '你是家庭机器人的眼睛。用一两句话描述画面重点:有什么人/物品/文字(画面里有算式、题目或作业必须原样读出内容)。直接描述,不要客套。';
